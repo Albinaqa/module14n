@@ -23,6 +23,30 @@ def pet_upd(petid, name, status="available"):
     r = requests.post(api_url, api_data)
     return r    
 
+# Создаем нового пользователя
+def user_new(id, username, firstName, lastName, email, password, phone, userStatus):
+    api_url = f"{base_url}/user"
+    # словарь с параметрами
+    api_data = {
+        'id':id,
+        'username':username,
+        'firstName':firstName,
+        'lastName':lastName,
+        'email':email,
+        'password':password,
+        'phone':phone,
+        'userStatus':userStatus
+        }    
+    print(api_data)
+    r = requests.post(api_url, json=api_data)
+    return r    
+
+# получаем информацию о пользователе по имени
+def user(username):
+    api_url = f"{base_url}/user/{username}"
+    r = requests.get(api_url)
+    return r
+
 # выводим и анализируем результат
 def req_info(r):
     try:
@@ -49,4 +73,13 @@ if __name__ == '__main__':
     print("UPD")
     # апд. по апи
     r = pet_upd(1, "dog")
+    req_info(r)
+
+    print("Create user")
+    # создание по апи
+    r = user_new("777a", "Lyly", "Vasya", "Pupkin", "vpupkin@mail.ru", "Qwerty", "555-55-55", 0)
+    req_info(r)
+
+    print("Get user")
+    r = user("Fedy555")
     req_info(r)
